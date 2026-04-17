@@ -1,0 +1,100 @@
+#----- 1 -----#
+# import os
+# import re
+# import argparse
+# 
+# def find_file(mask, main_dir):
+#     ans = []
+#     for root, dirs, files in os.walk(main_dir):
+#         for j in files:
+#             if re.match(mask, j):
+#                 ans.append(os.path.join(root, j))
+#     return ans
+# 
+# parser = argparse.ArgumentParser(description="This script lists files in gitignore")
+# parser.add_argument("--project_dir", type=str, help="path to directory")
+# 
+# inpt = parser.parse_args().project_dir
+# try:
+#     git_ignore = os.path.join(inpt, ".gitignore")
+#     main_dir = os.path.basename(inpt)
+#     tail = len(inpt) - len(main_dir)
+# 
+#     with open(git_ignore, "r", encoding="utf-8") as git_ign:
+#         arr = list(git_ign.read().split())
+# 
+#     print("Ignored files:")
+# 
+#     for i in arr:
+#         if i[0] != '*':
+#             if os.path.basename(os.path.dirname(os.path.join(inpt, i))) == main_dir:
+#                 print(f'{i} ignored by expression {i}')
+#                 
+#             else:
+#                 print(f'{os.path.join(main_dir, i)} ignored by expression {i}')
+# 
+#         else:
+#             for j in find_file('.' + i, inpt):
+#                 print(f"{j[tail::]} ignored by expression {i}")
+# except:
+#     print("Incorrect input")
+
+#----- 2 -----#
+# import os
+# import argparse
+# import time
+# import logging
+# from typing import List
+# 
+# def find_file(main_dir, cur_time, age_thr):
+#     last = []
+#     for root, dirs, files in os.walk(main_dir):
+#         for j in files:
+#             if cur_time - os.path.getmtime(os.path.join(root, j)) >= age_thr:
+#                 last.append(os.path.join(root, j))
+#                 os.remove(os.path.join(root, j))
+#         if dirs == [] and files == [] and root != main_dir:
+#             last.append(root)
+#             os.rmdir(root)
+#     return last
+#                
+# parser = argparse.ArgumentParser(description="This script deletes files and directories in Recycle Bin")
+# parser.add_argument("--trash_folder_path", type=str, help="path to Recycle Bin")
+# parser.add_argument("--age_thr", type=int, help="The time until a file is deleted after it is placed in the Recycle Bin")
+# args =  parser.parse_args()
+# 
+# trash_folder_path = args.trash_folder_path
+# age_thr = args.age_thr
+# father_trash = os.path.dirname(trash_folder_path)
+# cln_trsh = open(os.path.join(father_trash, "clean_trash.log"), "w")
+# cln_trsh.close()
+# 
+# logging.basicConfig(
+#     level=logging.INFO,
+#     format='%(asctime)s | %(levelname)-8s | %(message)s',
+#     datefmt='%Y-%m-%d %H:%M:%S',
+#     handlers=[logging.StreamHandler()]
+# )
+# 
+# logging.info(f" Script is started")
+# logging.info(" Press Ctrl+C to terminate the script")
+# 
+# while True:
+#     try:
+#         last = find_file(trash_folder_path, time.time(), age_thr)
+#         logging.info(f" List of deleted directories and files: {last}")
+#         with open(os.path.join(father_trash, "clean_trash.log"), 'a') as f:
+#             for i in last:
+#                 f.write(i)
+#                 f.write("\n")
+#                 
+#     except KeyboardInterrupt:
+#         logging.info(" Script is finished")
+#         break
+#         
+#     except Exception as e:
+#         logging.error(f" Error: {e}")
+#         break
+#     
+#     time.sleep(1)
+
