@@ -1,0 +1,215 @@
+## Задача 1 ##
+# class BankAccount:
+#     def __init__(self, bal):
+#         self.balance = bal
+
+#     @property
+#     def balance(self):
+#         return self._bal
+    
+#     @balance.setter
+#     def balance(self, v): 
+#         if v < 0:
+#             print("Balance cant be < 0")        
+#         else: 
+#             self._bal = v
+
+#     def deposit(self, am):
+#         if am < 0:
+#             print("am cant be < 0")
+#         self._bal += am
+
+#     def withdraw(self, am):
+#         if am < 0:
+#             print("am cant be < 0")
+#         if am > self._bal:
+#             print("недостаточно средств")
+#         self._bal -= am
+
+#     def __str__(self):
+#         return f"Счёт: {self._bal}"
+    
+
+## Задача 2 ##
+# class Stack:
+#     def __init__(self):
+#         self.stk = []
+        
+#     def push(self, x):
+#         self.stk.append(x)
+        
+#     def pop(self):
+#         if len(self.stk) == 0:
+#             print("ValueError")
+#         else: 
+#             self.stk.pop()
+            
+#     def peek(self):
+#         if len(self.stk) == 0:
+#             print("Nothing")
+#         return self.stk[-1]
+        
+#     def __len__(self):
+#         return len(self.stk)
+        
+#     def __bool__(self):
+#         if len(self.stk) == 0:
+#             return False
+#         else:
+#             return True
+            
+#     def __contains__(self, x):
+#         if x in self.stk:
+#             return True
+#         else:
+#             return False
+            
+#     def __repr__(self):
+#         return f"Stack: {self.stk}"
+    
+
+## Задача 3 ##
+# class Rectangle:
+#     def __init__(self, w, h):
+#         self.w = w
+#         self.h = h
+        
+#     def area(self):
+#         return self.w * self.h
+        
+#     def perimeter(self):
+#         res = (self.w + self.h) * 2
+#         print(res)
+        
+#     def __eq__(self, other):
+#         if self.area() == other.area():
+#             print("Rectangles are equal")
+#         else:
+#             print("Rectangles are not equal")
+            
+#     def __lt__(self, other):
+#         d = abs(self.area() - other.area())
+#         print("The difference in area is:", d)
+        
+#     def __add__(self, other):
+#         if self.w == other.w:
+#             return f"Rectangle({self.w},{self.h}) + Rectangle({other.w},{other.h}) = Rectangle({self.w},{self.h + other.h})"
+#         else:
+#             print("Ширина должна совпадать")
+            
+#     def __repr__(self):
+#         return f"Rectangle{self.w, self.h}"
+        
+#     def __str__(self):
+#         return f"Прямоугольник {self.w}x{self.h}"
+
+
+## Задача 4 ##
+
+# class Product:
+#     def __init__(self, nm, pr):
+#         self.name = nm
+#         self.price = pr
+    
+#     @property
+#     def price(self):
+#         return self._pr
+    
+#     @price.setter
+#     def price(self, v):
+#         if v < 0:
+#             print("price cant be < 0!")
+#         else:
+#             self._pr = v
+
+#     def discount(self, pct):
+#         if pct < 0:
+#             print("percent cant be < 0")
+#         elif pct > 0 and pct < 100:
+#             self._pr = self._pr - (self._pr * pct / 100)
+
+#     def __str__(self):
+#         return f"{self.name}:{self._pr} руб."
+    
+# class DigitalProduct(Product):
+#     def __init__(self, nm, pr, fs):
+#         super().__init__(nm, pr)
+#         self.file_size = fs
+    
+#     @property
+#     def file_size(self):
+#         return self._fs
+    
+#     @file_size.setter
+#     def file_size(self, v):
+#         if v < 0:
+#             print("size cant be < 0!")
+#         else:
+#             self._fs = v
+    
+#     def download_info(self):
+#         return f"Скачать:{self.name} ({self._fs})"
+    
+#     def total_price(self):
+#         return self._pr
+
+
+# class PhysicalProduct(Product):
+#     def __init__(self, nm, pr, wt):
+#         super().__init__(nm, pr)
+#         self.weight = wt
+    
+#     @property
+#     def weight(self):
+#         return self._wt
+    
+#     @weight.setter
+#     def weight(self, v):
+#         if v < 0:
+#             print("weight cant be < 0!")
+#         else:
+#             self._wt = v
+
+#     def shipping_cost(self):
+#         return self._wt * 50
+    
+#     def total_price(self):
+#         return self._pr + self.shipping_cost()
+    
+# class Cart:
+#     def __init__(self):
+#         self.lst = []
+
+#     def add(self, obj):
+#         if isinstance(obj, Product):
+#             self.lst.append(obj)
+#         else:
+#             print("It's not a product. You can't add it")
+
+#     def remove(self, nm):
+#         for i in range(len(self.lst)):
+#             if self.lst[i].name == nm:
+#                 self.lst.pop(i)
+#                 return
+    
+#     def total(self):
+#         s = 0
+#         for p in self.lst:
+#             if isinstance(p, PhysicalProduct):
+#                 s += p.total_price()
+#             else:
+#                 s += p.price
+#         return s
+
+#     def __len__(self):
+#         return len(self.lst)
+    
+#     def __str__(self):
+#         if len(self.lst) == 0:
+#             return f"В корзине ничего нет"
+        
+#         out = "Корзина:\n"
+#         for p in self.lst:
+#             out += f"{p.name}; Цена: {p.total_price()} руб\n"
+        
+#         return out + f"Итого: {self.total()} руб"
